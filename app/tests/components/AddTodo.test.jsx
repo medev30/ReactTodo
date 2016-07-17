@@ -37,6 +37,7 @@ describe('AddTodo', () => {
         var addTodo = TestUtils.renderIntoDocument(<AddTodo onAddTodo={spy}/>);
         var $el = $(ReactDOM.findDOMNode(addTodo));
 
+        // change the value of text input
         addTodo.refs.todoText.value = todoText;
 
         // simulate submit
