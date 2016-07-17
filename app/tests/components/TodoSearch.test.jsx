@@ -24,8 +24,6 @@ describe('TodoSearch', () => {
 // at this point the spy should have been called with showCompleted = false and searchText = 'Dog'
 // so now we test for this
         expect(spy).toHaveBeenCalledWith(false, 'Dog');
-
-
     });
 
     it('should call onSearch with proper checked value', () => {
