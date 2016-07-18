@@ -1,33 +1,22 @@
 var React = require('react');
+var uuid = require('node-uuid');
+
 var TodoList = require('TodoList');
 var AddTodo = require('AddTodo');
 var TodoSearch = require('TodoSearch');
-var uuid = require('node-uuid');
+var TodoAPI = require('TodoAPI');
 
 var TodoApp = React.createClass({
     getInitialState: function() {
         return {
             showCompleted: false,
             searchText: '',
-            todos: [
-                {
-                    id: uuid(),
-                    text: 'Walk the dog',
-                    completed: false
-                }, {
-                    id: uuid(),
-                    text: 'Clean the dog',
-                    completed: true
-                }, {
-                    id: uuid(),
-                    text: 'Walk the cat',
-                    completed: true
-                }, {
-                    id: uuid(),
-                    text: 'Learn React',
-                    completed: false
-                }            ]
+            todos: TodoAPI.getTodos()
         };
+    },
+    // called after the props or state is changed
+    componentDidUpdate: function () {
+        TodoAPI.setTodos(this.state.todos);
     },
     onAddTodo: function (text) {
         this.setState({
@@ -58,12 +47,13 @@ var TodoApp = React.createClass({
         });
     },
     render: function() {
-        var {todos} = this.state;
+        var {todos, showCompleted, searchText} = this.state;
+        var filteredTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
 
         return (
             <div>
                 <TodoSearch onSearch={this.onSearch} />
-                <TodoList todos={todos} onToggle={this.onToggle}/>
+                <TodoList todos={filteredTodos} onToggle={this.onToggle}/>
                 <AddTodo onAddTodo={this.onAddTodo} />
             </div>
         );
