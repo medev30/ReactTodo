@@ -22,9 +22,19 @@ describe('TodoList', () => {
         }];
 
         var todoList = TestUtils.renderIntoDocument(<TodoList todos={todos}/>);
-        // how many components (e.g. Todo) are render under a separate component (e.g. todoList)
+        // how many components (e.g. Todo) are rendered under a separate component (e.g. todoList)
         var todosComponents = TestUtils.scryRenderedComponentsWithType(todoList, Todo);
 
         expect(todosComponents.length).toBe(todos.length);
+    });
+
+    it('should render empty message if no todos', () => {
+        var todos = [];
+
+        var todoList = TestUtils.renderIntoDocument(<TodoList todos={todos}/>);
+        // load DOM
+        var $el = $(ReactDOM.findDOMNode(todoList));
+        // find element and check if exists
+        expect($el.find('.container__message').length).toBe(1);
     });
 });
