@@ -40,6 +40,4 @@ describe('Actions', () => {
 
         expect(res).toEqual(action);
     });
-
-
 });
